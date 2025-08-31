@@ -1,7 +1,9 @@
 import React from 'react';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000';
+
 const ProductCard = ({ product, similarity }) => {
-  const imageUrl = `http://127.0.0.1:8000/static/${product.image_filename}`;
+  const imageUrl = `${API_BASE_URL}/static/${product.image_filename}`;
   const similarityPercentage = (similarity * 100).toFixed(2);
   
   const getBarColor = () => {
