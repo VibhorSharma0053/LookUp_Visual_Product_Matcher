@@ -3,8 +3,8 @@ import json
 import numpy as np
 from PIL import Image
 
-from app.services.config import METADATA_PATH, STATIC_PATH
-from app.services.process_image import model, transform_image, get_image_embedding
+from services.config import METADATA_PATH, STATIC_PATH
+from services.process_image import model, transform_image, get_image_embedding
 
 def extract_all_features():
     print("Starting feature extraction process with MobileNetV2...")
