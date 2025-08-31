@@ -7,8 +7,10 @@ import torchvision.transforms as transforms
 from torchvision import models
 
 def get_model():
-    model = models.resnet50(weights=models.ResNet50_Weights.DEFAULT)
-    model = torch.nn.Sequential(*(list(model.children())[:-1]))
+    model = models.mobilenet_v2(weights=models.MobileNet_V2_Weights.DEFAULT)
+    
+    model.classifier = torch.nn.Sequential(*list(model.classifier.children())[:-1])
+    
     model.eval()
     return model
 
@@ -28,4 +30,4 @@ def get_image_embedding(image_tensor: torch.Tensor, model) -> np.ndarray:
     return embedding.view(embedding.size(0), -1).numpy()
 
 model = get_model()
-print("Vision model loaded successfully!")
+print("Vision model (MobileNetV2) loaded successfully!")

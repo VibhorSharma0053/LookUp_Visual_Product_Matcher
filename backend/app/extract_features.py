@@ -3,13 +3,11 @@ import json
 import numpy as np
 from PIL import Image
 
-
 from app.services.config import METADATA_PATH, STATIC_PATH
 from app.services.process_image import model, transform_image, get_image_embedding
 
 def extract_all_features():
-
-    print("Starting feature extraction process...")
+    print("Starting feature extraction process with MobileNetV2...")
     
     try:
         with open(METADATA_PATH, 'r') as f:
@@ -22,7 +20,7 @@ def extract_all_features():
     
     print(f"Processing {len(product_metadata)} images...")
     for product in product_metadata:
-        image_filename = product['image_filename']
+        image_filename = product.get('image_filename', f"{product['id']}.jpg")
         image_path = os.path.join(STATIC_PATH, image_filename)
         
         try:
@@ -33,7 +31,7 @@ def extract_all_features():
             all_features.append(feature_vector)
         except Exception as e:
             print(f"Error processing {image_path}: {e}")
-            all_features.append(np.zeros((1, 2048))) 
+            all_features.append(np.zeros((1, 1280))) 
 
     features_array = np.vstack(all_features)
     np.save(METADATA_PATH.parent / 'features.npy', features_array)
